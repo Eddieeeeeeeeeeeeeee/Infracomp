@@ -1,0 +1,71 @@
+  import java.util.Scanner;
+
+public class Taller1B implements Runnable{
+
+        private int thread;
+        private int inicio;
+        private int fin;
+        private int ms;
+
+        public Taller1B(int n, int ini, int fina, int mils)
+        {
+            thread=n;
+            inicio=ini;
+            fin=fina;
+            ms= mils;
+        }
+        public void run()
+        {
+            if(thread==1)
+            {
+                for(int i=inicio; i<fin; i++)
+                {
+                    if(i%2==0) {
+                        System.out.println("El thread " + thread + " tiene un número par " + i);
+                        try {
+                            Thread.sleep(ms);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                for(int i=inicio; i<fin; i++)
+                {
+                    if(i%2!=0) {
+                        System.out.println("El thread " + thread + " tiene un número Impar " + i);
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // Aqui primero pone un número seguido de un guión: 0-12 para establecer el valor de inicio y el valor final.
+        //Luego de dar enter pone un entero correspondiente al número de ms.
+        public static void main (String[] args)
+        {
+            Scanner teclado = new Scanner(System.in);
+            String pares=  teclado.nextLine();
+            String[] pareimpar= pares.split("-");
+            String Par= pareimpar[0];
+            String Impar=pareimpar[1];
+            int Inicio= Integer.parseInt(Par);
+            int Final=Integer.parseInt(Impar);
+            int ms= teclado.nextInt();
+
+            Thread Thread1=new Thread(new Taller1B(1,Inicio, Final,ms)) ;
+            Thread Thread2=new Thread(new Taller1B(1,Inicio, Final,ms));
+            Thread1.start();
+            Thread2.start();
+
+        }
+    }
+
